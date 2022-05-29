@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -9,15 +10,17 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import edu.wpi.first.math.MathUtil;
 
 public class shooter {
-    TalonFX topFW;
-    TalonFX botFW;
-    TalonFXConfiguration topConfig;
-    TalonFXConfiguration botConfig;
 
-    double topSpeed;
-    double botSpeed;
+    // you should generally change all variables that you dont want to access outside of the class into private
+    private TalonFX topFW;
+    private TalonFX botFW;
+    private TalonFXConfiguration topConfig;
+    private TalonFXConfiguration botConfig;
 
-    double increment;
+    private double topSpeed;
+    private double botSpeed;
+
+    private double increment;
 
     public shooter(){
         topFW = new TalonFX(1);
@@ -26,24 +29,20 @@ public class shooter {
         topConfig = new TalonFXConfiguration();
         botConfig = new TalonFXConfiguration();
 
-        //topConfig.slot0.kP = 0;
-        //topConfig.slot0.kI = 0;
-        //topConfig.slot0.kD = 0;
+        //you really only need kP and kF for flywheel
+        topConfig.slot0.kP = 0;
         topConfig.slot0.kF = .01;
 
-        //botConfig.slot0.kP = 0;
-        //botConfig.slot0.kI = 0;
-        //botConfig.slot0.kD = 0;
+        botConfig.slot0.kP = 0;
         botConfig.slot0.kF = .01;
         
         topFW.configAllSettings(topConfig);
         botFW.configAllSettings(botConfig);
-        topSpeed = 0;
-        botSpeed = 0;
 
         topFW.setNeutralMode(NeutralMode.Coast);
         topFW.setNeutralMode(NeutralMode.Coast);
 
+        //compensate to less than 12V on the comp robot its 10V
         topFW.configVoltageCompSaturation(12);
         botFW.configVoltageCompSaturation(12);
     
@@ -53,14 +52,12 @@ public class shooter {
         topFW.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
         botFW.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
 
-        topFW.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
-        botFW.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+        topFW.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        botFW.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         topFW.setInverted(true);
         botFW.setInverted(true);
 
-        MathUtil.clamp(topSpeed, -1, 1);
-        MathUtil.clamp(botSpeed, -1, 1);
     }
 
     public void adjustSpeed(double topAdjust, double botAdjust){
@@ -92,5 +89,13 @@ public class shooter {
 
     public double getBotRPM(){
         return (botFW.getSelectedSensorVelocity() * 600) / 2048;
+    }
+
+    public void configFeedbackVals(double kP, double kF){
+        topConfig.slot0.kP = kP;
+        botConfig.slot0.kP = kP;
+
+        topConfig.slot0.kF = kF;
+        botConfig.slot0.kF = kF;
     }
 }
