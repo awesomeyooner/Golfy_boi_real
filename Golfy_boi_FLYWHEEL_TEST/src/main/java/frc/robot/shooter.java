@@ -11,6 +11,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class shooter {
+    
+    public enum ShooterState{
+        REV,
+        OFF
+    }
+
+    ShooterState shooterstate = ShooterState.OFF;
 
     // you should generally change all variables that you dont want to access outside of the class into private
     private TalonFX topFW;
@@ -21,9 +28,12 @@ public class shooter {
     private double topSpeed;
     private double botSpeed;
 
-    private double increment = .05;
+    double increment = .05;
+
+    
 
     public shooter(){
+
         topFW = new TalonFX(1);
         botFW = new TalonFX(2);
         
@@ -61,7 +71,18 @@ public class shooter {
 
     }
 
-    //change all methods that should not be accessed in any other classes to private
+    public void update(){
+        ShooterState snapShooterState; 
+        snapShooterState = shooterstate;
+        switch(snapShooterState){
+            case REV:
+                setShooter();
+                break;
+            case OFF:
+                setShooterOFF();
+                break;
+        }
+    }
 
     public void adjustSpeed(double topAdjust, double botAdjust){
         topSpeed += topAdjust;
@@ -110,5 +131,12 @@ public class shooter {
         SmartDashboard.putNumber("botFW RPM", getBotRPM());
         SmartDashboard.putNumber("topFW Amps", getTopAmp());
         SmartDashboard.putNumber("botFW Amps", getBotAmp());
+    }
+    public double getTop_kF(){
+        return SmartDashboard.getNumber("t0p kF", .01);
+    }
+
+    public double getBot_kF(){
+        return SmartDashboard.getNumber("b0t kF", .01);
     }
 }
