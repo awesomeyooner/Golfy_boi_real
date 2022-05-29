@@ -21,7 +21,6 @@ public class shooter {
     private double topSpeed;
     private double botSpeed;
 
-    private double increment = .05;
 
     public shooter(){
         topFW = new TalonFX(1);

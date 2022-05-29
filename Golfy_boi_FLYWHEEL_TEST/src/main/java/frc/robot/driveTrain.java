@@ -8,10 +8,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.math.MathUtil;
 
 public class driveTrain {
-    TalonSRX leftMaster;
-    TalonSRX leftSlave;
-    TalonSRX rightMaster;
-    TalonSRX rightSlave;
+    private TalonSRX leftMaster;
+    private TalonSRX leftSlave;
+    private TalonSRX rightMaster;
+    private TalonSRX rightSlave;
 
     double leftSpeed;
     double rightSpeed;
