@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class shooter {
 
@@ -20,7 +21,7 @@ public class shooter {
     private double topSpeed;
     private double botSpeed;
 
-    private double increment;
+    private double increment = .05;
 
     public shooter(){
         topFW = new TalonFX(1);
@@ -60,6 +61,8 @@ public class shooter {
 
     }
 
+    //change all methods that should not be accessed in any other classes to private
+
     public void adjustSpeed(double topAdjust, double botAdjust){
         topSpeed += topAdjust;
         botSpeed += botAdjust;
@@ -75,19 +78,19 @@ public class shooter {
         botFW.set(ControlMode.PercentOutput, 0);
     }
 
-    public double getTopAmp(){
+    private double getTopAmp(){
         return topFW.getStatorCurrent();
     }
 
-    public double getBotAmp(){
+    private double getBotAmp(){
         return botFW.getStatorCurrent();
     }
 
-    public double getTopRPM(){
+    private double getTopRPM(){
         return (topFW.getSelectedSensorVelocity() * 600) / 2048;
     }
 
-    public double getBotRPM(){
+    private double getBotRPM(){
         return (botFW.getSelectedSensorVelocity() * 600) / 2048;
     }
 
@@ -97,5 +100,15 @@ public class shooter {
 
         topConfig.slot0.kF = kF;
         botConfig.slot0.kF = kF;
+    }
+
+    //make a method to log data instead of dumping it all in robot and then put it in a periodic fn
+    private void logData(){
+        SmartDashboard.putNumber("topFW speed", topSpeed);
+        SmartDashboard.putNumber("botFW speed", botSpeed);
+        SmartDashboard.putNumber("topFW RPM", getTopRPM());
+        SmartDashboard.putNumber("botFW RPM", getBotRPM());
+        SmartDashboard.putNumber("topFW Amps", getTopAmp());
+        SmartDashboard.putNumber("botFW Amps", getBotAmp());
     }
 }

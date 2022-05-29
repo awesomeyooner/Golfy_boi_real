@@ -32,14 +32,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
-    //SmartDashboard.putNumber("topSpeed", Shooter.topSpeed);
-    //SmartDashboard.putNumber("botSpeed", Shooter.botSpeed);
-    Shooter.increment = .05;
-    SmartDashboard.putNumber("t0p kF", Shooter.topConfig.slot0.kF);
-    SmartDashboard.putNumber("b0t kF", Shooter.botConfig.slot0.kF);
+    
+    // just have a starting value here
+    SmartDashboard.putNumber("t0p kF", .01);
+    SmartDashboard.putNumber("b0t kF", .01);
   }
 
   /**
@@ -51,26 +47,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("topFW speed", Shooter.topSpeed);
-    SmartDashboard.putNumber("botFW speed", Shooter.botSpeed);
-    SmartDashboard.putNumber("topFW RPM", Shooter.getTopRPM());
-    SmartDashboard.putNumber("botFW RPM", Shooter.getBotRPM());
-    SmartDashboard.putNumber("topFW Amps", Shooter.getTopAmp());
-    SmartDashboard.putNumber("botFW Amps", Shooter.getBotAmp());
 
-    Shooter.topConfig.slot0.kF = Shooter.getTop_kF();
 
     //SmartDashboard.putNumber("top Error", Shooter.topSpeed - Shooter.topFW.getSelectedSensorVelocity());
     //SmartDashboard.putNumber("bot Error", Shooter.botSpeed - Shooter.botFW.getSelectedSensorVelocity());
 
     if(controller.getRawButtonPressed(1))
-      Shooter.adjustSpeed(0, Shooter.increment);
+      Shooter.adjustSpeed(0, .05);
     if(controller.getRawButtonPressed(2))
-      Shooter.adjustSpeed(0, -Shooter.increment);
+      Shooter.adjustSpeed(0, -.05);
     if(controller.getRawButtonPressed(3))
-      Shooter.adjustSpeed(Shooter.increment, 0);
+      Shooter.adjustSpeed(.05, 0);
     if(controller.getRawButtonPressed(4))
-      Shooter.adjustSpeed(-Shooter.increment, 0);
+      Shooter.adjustSpeed(-.05, 0);
     
   }
 
