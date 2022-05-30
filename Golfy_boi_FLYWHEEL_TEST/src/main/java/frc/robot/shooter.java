@@ -90,7 +90,7 @@ public class shooter {
     }
 
     public void setShooter(){
-        topFW.set(ControlMode.PercentOutput, topSpeed);
+        topFW.set(ControlMode.Velocity, topSpeed);
         botFW.set(ControlMode.PercentOutput, botSpeed);
     }
 
