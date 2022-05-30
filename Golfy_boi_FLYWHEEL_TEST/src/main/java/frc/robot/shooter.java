@@ -124,7 +124,7 @@ public class shooter {
     }
 
     //make a method to log data instead of dumping it all in robot and then put it in a periodic fn
-    private void logData(){
+    public void logData(){
         SmartDashboard.putNumber("topFW speed", topSpeed);
         SmartDashboard.putNumber("botFW speed", botSpeed);
         SmartDashboard.putNumber("topFW RPM", getTopRPM());
@@ -132,11 +132,16 @@ public class shooter {
         SmartDashboard.putNumber("topFW Amps", getTopAmp());
         SmartDashboard.putNumber("botFW Amps", getBotAmp());
     }
+
     public double getTop_kF(){
         return SmartDashboard.getNumber("t0p kF", .01);
     }
 
     public double getBot_kF(){
         return SmartDashboard.getNumber("b0t kF", .01);
+    }
+
+    public boolean atSpeed(){
+        return Math.abs(topFW.getSelectedSensorVelocity() - topSpeed) <= 50 && Math.abs(botFW.getSelectedSensorVelocity() - botSpeed) <= 50;
     }
 }
