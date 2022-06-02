@@ -16,6 +16,7 @@ public class driveTrain {
     double leftSpeed;
     double rightSpeed;
 
+
     public driveTrain(){
         leftSpeed = 0;
         rightSpeed = 0;
@@ -37,9 +38,10 @@ public class driveTrain {
         rightMaster.setNeutralMode(NeutralMode.Coast);
         leftSlave.setNeutralMode(NeutralMode.Coast);
         rightSlave.setNeutralMode(NeutralMode.Coast);
+    }
 
-        MathUtil.clamp(leftSpeed, -1, 1);
-        MathUtil.clamp(rightSpeed, -1, 1);
+    public void update(){
+        tankDrive(-Robot.controller.getRawAxis(1), -Robot.controller.getRawAxis(5));
     }
 
     
@@ -49,5 +51,10 @@ public class driveTrain {
 
         leftMaster.set(ControlMode.PercentOutput, leftSpeed);
         rightMaster.set(ControlMode.PercentOutput, rightSpeed);
+    }
+
+    private void tankDrive(double left, double right){
+        leftMaster.set(ControlMode.PercentOutput, left);
+        rightMaster.set(ControlMode.PercentOutput, right);
     }
 }

@@ -22,17 +22,17 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   shooter Shooter = new shooter();
-  driveTrain drivetrain = new driveTrain();
+  driveTrain drive = new driveTrain();
+  //driveTrain drivetrain = new driveTrain();
   //vision Vision = new vision();
   //gyro Gyro = new gyro();
-  Joystick controller = new Joystick(0);
+  public static Joystick controller = new Joystick(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    Shooter.increment = .05;
     // just have a starting value here
     SmartDashboard.putNumber("t0p kF", .01);
     SmartDashboard.putNumber("b0t kF", .01);
@@ -50,14 +50,14 @@ public class Robot extends TimedRobot {
     Shooter.logData();
     //SmartDashboard.putNumber("top Error", Shooter.topSpeed - Shooter.topFW.getSelectedSensorVelocity());
 
-    if(controller.getRawButtonPressed(3))
-      Shooter.adjustSpeed(Shooter.increment, 0);
-    if(controller.getRawButtonPressed(4))
-      Shooter.adjustSpeed(-Shooter.increment, 0);
     if(controller.getRawButtonPressed(1))
-      Shooter.adjustSpeed(0, Shooter.increment);
+      Shooter.adjustSpeed(.05, 0);
     if(controller.getRawButtonPressed(2))
-      Shooter.adjustSpeed(0, -Shooter.increment);
+      Shooter.adjustSpeed(-.05, 0);
+    if(controller.getRawButtonPressed(3))
+      Shooter.adjustSpeed(0, .05);
+    if(controller.getRawButtonPressed(4))
+      Shooter.adjustSpeed(0, -.05);
     
   }
 
@@ -101,12 +101,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    drivetrain.setMotor(controller.getRawAxis(1), controller.getRawAxis(4));
+    drive.setMotor(controller.getRawAxis(1), controller.getRawAxis(4));
     
     if(controller.getRawButton(5))
     Shooter.setShooter();
     else if(controller.getRawButton(5) == false)
     Shooter.setShooterOFF();
+
+    drive.update();
   }
 
 

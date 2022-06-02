@@ -24,6 +24,7 @@
 *.mod
 *.smod
 
+.history
 # Compiled Static libraries
 *.lai
 *.la
@@ -160,5 +161,3 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
-
-.history
