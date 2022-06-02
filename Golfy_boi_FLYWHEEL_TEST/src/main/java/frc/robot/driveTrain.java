@@ -19,15 +19,15 @@ public class driveTrain {
     public driveTrain(){
         leftSpeed = 0;
         rightSpeed = 0;
-        leftMaster = new TalonSRX(1);
-        rightMaster = new TalonSRX(2);
-        leftSlave = new TalonSRX(3);
-        rightSlave = new TalonSRX(4);
+        leftMaster = new TalonSRX(3);
+        rightMaster = new TalonSRX(4);
+        leftSlave = new TalonSRX(5);
+        rightSlave = new TalonSRX(6);
 
         leftSlave.follow(leftMaster);
         rightSlave.follow(rightMaster);
 
-        leftMaster.setInverted(false);
+        leftMaster.setInverted(true);
         rightMaster.setInverted(false);
 
         leftSlave.setInverted(InvertType.FollowMaster);
@@ -44,8 +44,8 @@ public class driveTrain {
 
     
     public void setMotor(double speed, double turn){
-        leftSpeed = (speed) + (turn * .5);
-        rightSpeed = (speed) - (turn * .5);
+        leftSpeed = (speed) - (turn * .5);
+        rightSpeed = (speed) + (turn * .5);
 
         leftMaster.set(ControlMode.PercentOutput, leftSpeed);
         rightMaster.set(ControlMode.PercentOutput, rightSpeed);

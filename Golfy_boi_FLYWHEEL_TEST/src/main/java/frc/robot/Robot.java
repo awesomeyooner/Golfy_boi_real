@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   shooter Shooter = new shooter();
-  //driveTrain drivetrain = new driveTrain();
+  driveTrain drivetrain = new driveTrain();
   //vision Vision = new vision();
   //gyro Gyro = new gyro();
   Joystick controller = new Joystick(0);
@@ -47,17 +47,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-
-
+    Shooter.logData();
     //SmartDashboard.putNumber("top Error", Shooter.topSpeed - Shooter.topFW.getSelectedSensorVelocity());
 
-    if(controller.getRawButtonPressed(1))
-      Shooter.adjustSpeed(Shooter.increment, 0);
-    if(controller.getRawButtonPressed(2))
-      Shooter.adjustSpeed(-Shooter.increment, 0);
     if(controller.getRawButtonPressed(3))
-      Shooter.adjustSpeed(0, Shooter.increment);
+      Shooter.adjustSpeed(Shooter.increment, 0);
     if(controller.getRawButtonPressed(4))
+      Shooter.adjustSpeed(-Shooter.increment, 0);
+    if(controller.getRawButtonPressed(1))
+      Shooter.adjustSpeed(0, Shooter.increment);
+    if(controller.getRawButtonPressed(2))
       Shooter.adjustSpeed(0, -Shooter.increment);
     
   }
@@ -102,7 +101,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //drivetrain.setMotor(controller.getRawAxis(1), controller.getRawAxis(4));
+    drivetrain.setMotor(controller.getRawAxis(1), controller.getRawAxis(4));
     
     if(controller.getRawButton(5))
     Shooter.setShooter();
