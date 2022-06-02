@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,11 +27,13 @@ public class RobotContainer {
 
   private final Drive drive = new Drive();
 
+  private XboxController driver = new XboxController(0);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    drive.setDefaultCommand(new FunctionalCommand(drive::tankDrive(.1,.1)));
+    drive.setDefaultCommand(new RunCommand(()->drive.tankDrive(driver.getLeftY(),driver.getRightY()), drive));
   }
 
   /**

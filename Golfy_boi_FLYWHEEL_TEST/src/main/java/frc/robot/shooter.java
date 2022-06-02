@@ -119,11 +119,11 @@ public class shooter {
     }
 
     public void configFeedbackVals(double kP, double kF){
-        topConfig.slot0.kP = kP;
-        botConfig.slot0.kP = kP;
+        topFW.config_kP(0, kP);
+        botFW.config_kP(0, kP);
 
-        topConfig.slot0.kF = kF;
-        botConfig.slot0.kF = kF;
+        topFW.config_kF(0, kF);
+        botFW.config_kF(0, kF);
     }
 
     //make a method to log data instead of dumping it all in robot and then put it in a periodic fn
