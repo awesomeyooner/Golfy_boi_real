@@ -45,7 +45,7 @@ public class driveTrain {
     }
 
     
-    public void setMotor(double speed, double turn){
+    public void arcadeDrive(double speed, double turn){
         leftSpeed = (speed) - (turn * .5);
         rightSpeed = (speed) + (turn * .5);
 

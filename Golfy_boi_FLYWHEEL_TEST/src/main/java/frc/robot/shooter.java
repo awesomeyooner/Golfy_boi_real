@@ -28,7 +28,7 @@ public class shooter {
     private double topSpeed;
     private double botSpeed;
 
-    double increment = .05;
+    double increment = 0;
 
     
 
@@ -138,6 +138,8 @@ public class shooter {
         SmartDashboard.putNumber("bot velocity", botFW.getSelectedSensorVelocity());
         SmartDashboard.putNumber("topFW temp C", topFW.getTemperature());
         SmartDashboard.putNumber("botFW temp C", botFW.getTemperature());
+        SmartDashboard.putNumber("top Error", topSpeed - getTopRPM());
+        SmartDashboard.putNumber("bot Error", botSpeed - getBotRPM());
     }
     public double getTop_kF(){
         return SmartDashboard.getNumber("t0p kF", .01);

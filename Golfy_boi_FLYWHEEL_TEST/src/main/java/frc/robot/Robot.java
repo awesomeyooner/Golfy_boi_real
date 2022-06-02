@@ -33,9 +33,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Shooter.increment = .05;
     // just have a starting value here
-    SmartDashboard.putNumber("t0p kF", .01);
-    SmartDashboard.putNumber("b0t kF", .01);
+    SmartDashboard.putNumber("_kP", .01);
+    SmartDashboard.putNumber("_kF", .01);
   }
 
   /**
@@ -48,16 +49,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Shooter.logData();
-    //SmartDashboard.putNumber("top Error", Shooter.topSpeed - Shooter.topFW.getSelectedSensorVelocity());
 
     if(controller.getRawButtonPressed(1))
-      Shooter.adjustSpeed(.05, 0);
+      Shooter.adjustSpeed(Shooter.increment, 0);
     if(controller.getRawButtonPressed(2))
-      Shooter.adjustSpeed(-.05, 0);
+      Shooter.adjustSpeed(-Shooter.increment, 0);
     if(controller.getRawButtonPressed(3))
-      Shooter.adjustSpeed(0, .05);
+      Shooter.adjustSpeed(0, Shooter.increment);
     if(controller.getRawButtonPressed(4))
-      Shooter.adjustSpeed(0, -.05);
+      Shooter.adjustSpeed(0, -Shooter.increment);
     
   }
 
@@ -99,13 +99,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() {;
+    Shooter.configFeedbackVals(SmartDashboard.getNumber("_kP", .01), SmartDashboard.getNumber("_kF", .01));
 
-    drive.setMotor(controller.getRawAxis(1), controller.getRawAxis(4));
-    
-    if(controller.getRawButton(5))
+    if(controller.getRawAxis(2) > 0.8)
     Shooter.setShooter();
-    else if(controller.getRawButton(5) == false)
+    else if(controller.getRawAxis(2) < 0.8)
     Shooter.setShooterOFF();
 
     drive.update();
