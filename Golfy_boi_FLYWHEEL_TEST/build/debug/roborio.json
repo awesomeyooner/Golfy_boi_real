@@ -1,0 +1,9 @@
+[
+  {
+    "type": "java",
+    "name": "frcJava",
+    "port": 8349,
+    "target": "10.71.57.2",
+    "project": "Golfy_boi_FLYWHEEL_TEST"
+  }
+]
