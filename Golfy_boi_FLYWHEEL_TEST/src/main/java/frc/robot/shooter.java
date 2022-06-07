@@ -41,11 +41,11 @@ public class shooter {
         botConfig = new TalonFXConfiguration();
 
         //you really only need kP and kF for flywheel
-        topConfig.slot0.kP = 0;
-        topConfig.slot0.kF = .01;
+        topConfig.slot0.kP = .06;
+        topConfig.slot0.kF = .054;
 
-        botConfig.slot0.kP = 0;
-        botConfig.slot0.kF = .01;
+        botConfig.slot0.kP = .06;
+        botConfig.slot0.kF = .054;
         
         topFW.configAllSettings(topConfig);
         botFW.configAllSettings(botConfig);
@@ -95,6 +95,9 @@ public class shooter {
     public void setShooter(){
         topFW.set(ControlMode.PercentOutput, topSpeed);
         botFW.set(ControlMode.PercentOutput, botSpeed);
+       
+        //topFW.set(ControlMode.Velocity, conversion.RPMtoStepsPerDeciSec(topSpeed));
+        //botFW.set(ControlMode.Velocity, conversion.RPMtoStepsPerDeciSec(botSpeed));
     }
 
     public void setShooterOFF(){

@@ -34,18 +34,19 @@ public class driveTrain {
         leftSlave.setInverted(InvertType.FollowMaster);
         rightSlave.setInverted(InvertType.FollowMaster);
 
-        leftMaster.setNeutralMode(NeutralMode.Coast);
-        rightMaster.setNeutralMode(NeutralMode.Coast);
-        leftSlave.setNeutralMode(NeutralMode.Coast);
-        rightSlave.setNeutralMode(NeutralMode.Coast);
+        leftMaster.setNeutralMode(NeutralMode.Brake);
+        rightMaster.setNeutralMode(NeutralMode.Brake);
+        leftSlave.setNeutralMode(NeutralMode.Brake);
+        rightSlave.setNeutralMode(NeutralMode.Brake);
     }
 
     public void update(){
-        tankDrive(-Robot.controller.getRawAxis(1), -Robot.controller.getRawAxis(5));
+        //arcadeDrive(Robot.controller.getRawAxis(1), Robot.controller.getRawAxis(4));
+        tankDrive(Robot.controller.getRawAxis(1), Robot.controller.getRawAxis(5));
     }
 
     
-    public void arcadeDrive(double speed, double turn){
+    private void arcadeDrive(double speed, double turn){
         leftSpeed = (speed) - (turn * .5);
         rightSpeed = (speed) + (turn * .5);
 
@@ -57,4 +58,19 @@ public class driveTrain {
         leftMaster.set(ControlMode.PercentOutput, left);
         rightMaster.set(ControlMode.PercentOutput, right);
     }
+
+    public void setCoast(){
+        leftMaster.setNeutralMode(NeutralMode.Coast);
+        rightMaster.setNeutralMode(NeutralMode.Coast);
+        leftSlave.setNeutralMode(NeutralMode.Coast);
+        rightSlave.setNeutralMode(NeutralMode.Coast);
+    }
+    public void setSentry(){
+        leftMaster.setNeutralMode(NeutralMode.Brake);
+        rightMaster.setNeutralMode(NeutralMode.Brake);
+        leftSlave.setNeutralMode(NeutralMode.Brake);
+        rightSlave.setNeutralMode(NeutralMode.Brake);
+    }
+
+
 }
